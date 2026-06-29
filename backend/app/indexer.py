@@ -1,3 +1,4 @@
+import os
 from backend.app.pdf_reader import extract_text
 from backend.app.text_chunker import chunk_text
 from backend.app.embeddings import get_embedding
@@ -24,6 +25,9 @@ def index_pdf(pdf_path):
         embeddings.append(get_embedding(chunk))
 
     print("💾 Storing in ChromaDB...")
-    add_chunks(chunks, embeddings)
-
+    add_chunks(
+    chunks,
+    embeddings,
+    os.path.basename(pdf_path)
+)
     print("✅ PDF indexed successfully!")
