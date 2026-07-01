@@ -1,7 +1,11 @@
 from backend.app.retriever import retrieve
+from backend.app.context_expander import prepare_context
+from backend.app.prompts.qa_prompt import build_qa_prompt
+
 from google import genai
 import os
 from dotenv import load_dotenv
+
 
 load_dotenv()
 
@@ -32,6 +36,11 @@ def answer_question(question):
     chunks = results["documents"]
     metadata = results["metadatas"]
 
+    chunks, metadata = prepare_context(
+        chunks,
+        metadata
+    )
+
     context = "\n\n".join(chunks)
     
     sources = []
@@ -43,46 +52,31 @@ def answer_question(question):
 
     sources = "\n".join(sources)
 
-    prompt = f"""
-You are a helpful AI assistant.
-
-You are DocuMind AI, an intelligent document assistant.
-
-Your task is to answer ONLY using the provided document context.
-
-Instructions:
-
-- Read ALL retrieved chunks carefully.
-- Combine information from multiple chunks into one complete answer.
-- Do not omit important details.
-- If examples exist in the document, include them.
-- If the document provides advantages, disadvantages, notes, or warnings, include them.
-- Format your response with headings and bullet points where appropriate.
-- If the answer is not present in the document, respond:
-  "I couldn't find that information in the uploaded document."
-
-If the answer is not found in the context,
-say:
-
-"I couldn't find that information in the document."
-
-Context:
-
-{context}
-
-Question:
-
-{question}
-
-Answer:
-"""
-
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=prompt
+    prompt = build_qa_prompt(
+        context=context,
+        question=question
     )
+    
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=prompt
+        )
+
+    except Exception as error:
+        print(f"❌ Gemini API Error: {error}")
+
+        return {
+            "success": False,
+            "answer": (
+                "The AI service is temporarily unavailable. "
+                "Please try again in a few moments."
+            ),
+            "sources": []
+        }
 
     return {
+        "success": True,
         "answer": response.text,
         "sources": sources
     }
