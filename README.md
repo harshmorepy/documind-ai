@@ -57,41 +57,59 @@ DocuMind AI solves this by combining Retrieval-Augmented Generation (RAG), vecto
 | chat.py             | REST API endpoint          |
 
 
-## 🏗️ System Architecture Diagram 
+## 🏗 System Architecture
 
-               User
-                  │
-                  ▼
-         FastAPI REST API
-                  │
-         ┌────────┴────────┐
-         ▼                 ▼
-     Chat API         Upload API
-         │                 │
-         └────────┬────────┘
-                  ▼
-            Service Layer
-                  │
-                  ▼
-            RAG Engine
-                  │
-         ┌────────┴─────────┐
-         ▼                  ▼
-    Retriever         PDF Indexer
-         │                  │
-         ▼                  ▼
- Context Expansion     Chunking
-         │                  │
-         └────────┬─────────┘
-                  ▼
-             ChromaDB
-                  │
-                  ▼
-               Gemini
-                  │
-                  ▼
-          Final AI Response
-                
+```mermaid
+flowchart TD
+
+    User[👤 User]
+
+    API[FastAPI REST API]
+
+    Chat[💬 Chat API]
+    Upload[📄 Upload API]
+
+    Service[⚙️ Service Layer]
+
+    RAG[RAG Engine]
+
+    Retriever[🔍 Retriever]
+    Indexer[📑 PDF Indexer]
+
+    Chunker[✂️ Text Chunking]
+
+    Context[🧠 Context Expansion]
+
+    Chroma[(🗄️ ChromaDB)]
+
+    Gemini[🤖 Gemini]
+
+    Answer[✅ AI Response]
+
+    User --> API
+
+    API --> Chat
+    API --> Upload
+
+    Chat --> Service
+    Upload --> Service
+
+    Service --> RAG
+
+    RAG --> Retriever
+    RAG --> Indexer
+
+    Indexer --> Chunker
+    Chunker --> Chroma
+
+    Retriever --> Context
+    Context --> Chroma
+
+    Chroma --> Gemini
+
+    Gemini --> Answer
+```
+
 
 ## 📜 Version History
 
