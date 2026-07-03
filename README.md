@@ -1,322 +1,194 @@
-# 📄 DocuMind AI
+![Python](https://img.shields.io/badge/Python-3.13-blue?logo=python)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.116-009688?logo=fastapi)
+![ChromaDB](https://img.shields.io/badge/VectorDB-ChromaDB-orange)
+![Gemini](https://img.shields.io/badge/LLM-Gemini%202.5%20Flash-blueviolet)
+![License](https://img.shields.io/badge/License-MIT-success)
+![Status](https://img.shields.io/badge/Status-Active%20Development-brightgreen)
+![Version](https://img.shields.io/badge/Version-v0.6.0-blue)
 
-> **An AI-Powered Intelligent Document Assistant built with Python, Google Gemini, and ChromaDB.**
 
-Upload PDF documents, ask questions in natural language, and receive accurate, context-aware answers powered by **Retrieval-Augmented Generation (RAG)** with transparent source citations.
+## 📊 Project Snapshot
 
----
-
-# 🌟 Overview
-
-DocuMind AI is an AI application that enables users to interact with PDF documents conversationally.
-
-Instead of manually searching through hundreds of pages, users can simply ask questions in natural language and receive accurate answers generated from the uploaded document.
-
-Unlike traditional chatbots, DocuMind AI grounds every answer using the document itself, making responses more reliable and explainable.
-
----
-
-# ✨ Features
-
-## Current Features
-
-- 📄 Upload PDF Documents
-- 📖 Extract Text from PDFs
-- ✂️ Intelligent Text Chunking
-- 🧠 Google Gemini Integration
-- 🔍 Semantic Search
-- 🗂 ChromaDB Vector Database
-- 🤖 Retrieval-Augmented Generation (RAG)
-- 📚 Source Attribution
-- 💬 Interactive Command Line Chat
-- ⚡ Fast Document Retrieval
-
----
-
-# 🚀 Upcoming Features
-
-- 🌐 FastAPI Backend
-- 🎨 Modern React Frontend
-- 📤 Drag & Drop PDF Upload
-- 📑 Multiple PDF Support
-- 🖼 Image Extraction
-- 📊 Table Understanding
-- 🔍 OCR Support
-- 🧠 Hybrid Search
-- 📈 Context Expansion
-- 💾 Chat History
-- 🔐 User Authentication
-- ☁️ Cloud Deployment
-- 🐳 Docker Support
-
----
-
-# 🛠 Tech Stack
-
-| Category | Technology |
-|-----------|------------|
-| Language | Python 3 |
-| LLM | Google Gemini 2.5 Flash |
-| Embeddings | Gemini Embedding Model |
+| Metric | Value |
+|---------|-------|
+| Version | v0.6.0 |
+| Development Status | Active |
+| Language | Python 3.13 |
+| Backend | FastAPI |
+| LLM | Gemini 2.5 Flash |
 | Vector Database | ChromaDB |
-| PDF Processing | PyMuPDF |
-| Text Chunking | LangChain Recursive Character Text Splitter |
-| Environment Variables | python-dotenv |
+| Architecture | Modular RAG |
+| License | MIT |
+
+
+## 🎯 Why DocuMind AI?
+
+Traditional chatbots cannot reliably answer questions about private documents because they lack access to the document's content.
+
+DocuMind AI solves this by combining Retrieval-Augmented Generation (RAG), vector embeddings, and Large Language Models to produce grounded, document-aware answers while citing the relevant source chunks.
+
+
+## ⭐ Highlights
+
+- Production-oriented architecture
+- FastAPI REST backend
+- Retrieval-Augmented Generation (RAG)
+- Semantic Search
+- Context Expansion
+- Source Citations
+- Modular Services
+- Clean Architecture
+- Ready for Cloud Deployment
+
+
+## 🧩 Core Components
+
+
+| Module              | Responsibility             |
+| ------------------- | -------------------------- |
+| pdf_reader.py       | Extract PDF text           |
+| text_chunker.py     | Split documents            |
+| embeddings.py       | Generate vector embeddings |
+| vector_store.py     | ChromaDB integration       |
+| retriever.py        | Semantic search            |
+| context_expander.py | Improve retrieval context  |
+| rag.py              | RAG orchestration          |
+| rag_service.py      | Business logic             |
+| chat.py             | REST API endpoint          |
+
+
+## 🏗️ System Architecture Diagram 
+
+               User
+                  │
+                  ▼
+         FastAPI REST API
+                  │
+         ┌────────┴────────┐
+         ▼                 ▼
+     Chat API         Upload API
+         │                 │
+         └────────┬────────┘
+                  ▼
+            Service Layer
+                  │
+                  ▼
+            RAG Engine
+                  │
+         ┌────────┴─────────┐
+         ▼                  ▼
+    Retriever         PDF Indexer
+         │                  │
+         ▼                  ▼
+ Context Expansion     Chunking
+         │                  │
+         └────────┬─────────┘
+                  ▼
+             ChromaDB
+                  │
+                  ▼
+               Gemini
+                  │
+                  ▼
+          Final AI Response
+                
+
+## 📜 Version History
+
+### v0.6.0
+
+- FastAPI Backend
+- Swagger UI
+- REST API
+- Service Layer
+- Clean Architecture
+
+### v0.5.0
+
+- Context Expansion
+- Improved Retrieval
+- Prompt Refactoring
+
+### v0.4.0
+
+- ChromaDB
+- Semantic Search
+
+### v0.3.0
+
+- Embedding Generation
+
+### v0.2.0
+
+- Text Chunking
+
+### v0.1.0
+
+- PDF Reader
+
+
+
+## 🎯 Next Milestone (v0.7.0)
+
+- Upload API
+- Automatic Indexing
+- File Validation
+- Multi-document Support
+
+## 🎯 Future Milestones
+
+- Authentication
+- Chat History
+- Streamlit Frontend
+- Docker
+- AWS Deployment
+- CI/CD
+- Monitoring
+
+
+## 💼 What This Project Demonstrates
+
+- AI Engineering
+- Backend Development
+- FastAPI
+- REST APIs
+- Vector Databases
+- Retrieval-Augmented Generation (RAG)
+- Prompt Engineering
+- Software Architecture
+- Git Workflow
+- Production-Oriented Development
+
+
+## 📚 Development Philosophy
+
+DocuMind AI is intentionally built in incremental milestones.
+
+Every feature is designed, implemented, tested, refactored, documented, and committed before moving to the next stage.
+
+This mirrors how production software is developed in professional engineering teams.
+
 
 ---
 
-# 📂 Project Structure
+## 🌟 Thank You
 
-```
-documind-ai/
-│
-├── backend/
-│   │
-│   ├── app/
-│   │   ├── embeddings.py
-│   │   ├── pdf_reader.py
-│   │   ├── rag.py
-│   │   ├── retriever.py
-│   │   ├── vector_store.py
-│   │   └── text_chunker.py
-│   │
-│   ├── experiments/
-│   │   ├── test_pdf_reader.py
-│   │   ├── test_chunking.py
-│   │   ├── test_embedding.py
-│   │   ├── test_vector_store.py
-│   │   ├── test_retriever.py
-│   │   └── test_rag.py
-│   │
-│   └── uploads/
-│
-├── design/
-│   └── screenshots/
-│
-├── requirements.txt
-├── README.md
-├── .gitignore
-└── .env
-```
+Thank you for taking the time to explore DocuMind AI.
 
----
+This project represents an ongoing journey toward building production-ready AI systems with clean architecture, scalable backend engineering, and modern Large Language Models.
 
-# ⚙️ Installation
+Whether you're a recruiter, developer, or AI enthusiast, I hope this repository provides insight into both the engineering process and the evolution of an AI application from prototype to production.
 
-## 1️⃣ Clone Repository
+If you find the project interesting:
 
-```bash
-git clone https://github.com/YOUR_USERNAME/documind-ai.git
+⭐ Star the repository
 
-cd documind-ai
-```
+🍴 Fork it
 
----
+💬 Share feedback
 
-## 2️⃣ Create Virtual Environment
+🚀 Follow the journey
 
-### Windows
+Happy Coding!
 
-```bash
-python -m venv .venv
-.venv\Scripts\activate
-```
-
-### macOS / Linux
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-```
-
----
-
-## 3️⃣ Install Dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## 4️⃣ Create Environment File
-
-Create a `.env` file in the root directory.
-
-```
-GEMINI_API_KEY=YOUR_API_KEY
-```
-
----
-
-## 5️⃣ Run DocuMind AI
-
-```bash
-python -m backend.experiments.test_rag
-```
-
----
-
-# 🧠 How It Works
-
-```
-                 User Question
-                        │
-                        ▼
-             Generate Query Embedding
-                        │
-                        ▼
-            Search ChromaDB Vector Store
-                        │
-                        ▼
-             Retrieve Relevant Chunks
-                        │
-                        ▼
-             Build Prompt with Context
-                        │
-                        ▼
-             Google Gemini 2.5 Flash
-                        │
-                        ▼
-               Generate Final Answer
-                        │
-                        ▼
-             Display Source Citations
-```
-
----
-
-# 💬 Example
-
-```
-👤 You:
-
-What is Python?
-
-------------------------------------------------------------
-
-🤖 DocuMind AI
-
-Python is a high-level, general-purpose programming language
-developed by Guido van Rossum in 1991.
-
-Key Features
-
-• Object-Oriented
-• Interpreted
-• Easy to Learn
-• Portable
-• Powerful
-• Open Source
-
-------------------------------------------------------------
-
-📚 Sources
-
-• python_notes.pdf (Chunk 10)
-
-• python_notes.pdf (Chunk 11)
-
-• python_notes.pdf (Chunk 12)
-```
-
----
-
-# 📈 Development Progress
-
-## ✅ Version v0.4.0
-
-### Completed
-
-- ✅ Project Initialization
-- ✅ Google Gemini Integration
-- ✅ PDF Text Extraction
-- ✅ Intelligent Chunking
-- ✅ Embedding Generation
-- ✅ ChromaDB Integration
-- ✅ Semantic Search
-- ✅ Retriever
-- ✅ Prompt Engineering
-- ✅ Complete RAG Pipeline
-- ✅ Source Attribution
-- ✅ Interactive Chat Interface
-
----
-
-# 🗺 Roadmap
-
-| Version | Milestone | Status |
-|----------|-----------|--------|
-| v0.1.0 | Project Setup | ✅ |
-| v0.2.0 | Gemini Integration | ✅ |
-| v0.3.0 | Embeddings & ChromaDB | ✅ |
-| v0.4.0 | Complete RAG Pipeline | ✅ |
-| v0.5.0 | Advanced Retrieval | 🔄 |
-| v0.6.0 | FastAPI Backend | ⏳ |
-| v0.7.0 | React Frontend | ⏳ |
-| v0.8.0 | Multi-PDF Chat | ⏳ |
-| v0.9.0 | Image & Table Understanding | ⏳ |
-| v1.0.0 | Production Release | 🚀 |
-
----
-
-# 🎯 Vision
-
-DocuMind AI is more than just a PDF chatbot.
-
-Our goal is to build an intelligent AI assistant capable of understanding:
-
-- 📄 Documents
-- 📊 Tables
-- 🖼 Images
-- 📈 Charts
-- 📐 Diagrams
-
-while providing trustworthy answers with complete source attribution.
-
-The long-term vision is to create an AI assistant that professionals, students, researchers, and businesses can rely on every day.
-
----
-
-# 🤝 Contributing
-
-Contributions, ideas, feature requests, and feedback are always welcome.
-
-If you'd like to improve DocuMind AI:
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Open a Pull Request
-
----
-
-# ⭐ Support
-
-If you like this project, consider giving it a ⭐ on GitHub.
-
-Every star motivates further development and helps more people discover the project.
-
----
-
-# 👨‍💻 Author
-
-**Harsh More**
-
-B.Tech Computer Science & Engineering
-
-Building modern AI applications using Python, Cloud, and Generative AI.
-
----
-
-# 🚀 Thank You
-
-Thank you for visiting **DocuMind AI**.
-
-This project is being built in public, one milestone at a time.
-
-Every commit represents a step toward creating a production-ready AI document assistant.
-
-If you're following this journey, don't forget to ⭐ the repository and check back for future updates.
-
-## ⭐ Happy Coding!
+— Harsh More
