@@ -1,23 +1,26 @@
-import os
 
-from dotenv import load_dotenv
-from google import genai
+"""
+DocuMind AI
 
-load_dotenv()
+Main FastAPI application.
 
-api_key = os.getenv("GEMINI_API_KEY")
+This module creates and configures the FastAPI application.
+"""
 
-if not api_key:
-    raise ValueError("GEMINI_API_KEY not found in .env file")
+from fastapi import FastAPI
+
+from backend.app.api.routers.health import router as health_router
+from backend.app.api.routers.root import router as root_router
+from backend.app.api.routers.chat import router as chat_router
 
 
-client = genai.Client(api_key=api_key)
-
-
-response = client.models.generate_content(
-    model = "gemini-2.5-flash",
-    contents = "Explain recursion like I am 10 years old."
-    
+app = FastAPI(
+    title="DocuMind AI",
+    description="AI-powered document intelligence platform.",
+    version="0.6.0"
 )
 
-print(response.text)
+app.include_router(root_router)
+app.include_router(health_router)
+app.include_router(chat_router)
+
