@@ -7,7 +7,7 @@ for Retrieval-Augmented Generation (RAG).
 Keeping prompts in a separate module makes them easier
 to maintain, test and improve.
 """
-
+from backend.app.prompts.formatting_rules import FORMATTING_RULES
 
 def build_qa_prompt(context: str, question: str) -> str:
     """
@@ -46,15 +46,7 @@ RULES
 - If definitions, advantages, disadvantages, notes, warnings or steps are present, include them.
 - Avoid repeating the same information.
 
-========================
-RESPONSE STYLE
-========================
-
-- Write clear and well-structured answers.
-- Use headings whenever appropriate.
-- Use bullet points for lists.
-- Preserve code examples exactly as they appear.
-- Explain concepts naturally instead of copying large portions of the document.
+{FORMATTING_RULES}
 
 ========================
 FAILURE BEHAVIOR
