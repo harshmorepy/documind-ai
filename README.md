@@ -4,14 +4,14 @@
 ![Gemini](https://img.shields.io/badge/LLM-Gemini%202.5%20Flash-blueviolet)
 ![License](https://img.shields.io/badge/License-MIT-success)
 ![Status](https://img.shields.io/badge/Status-Active%20Development-brightgreen)
-![Version](https://img.shields.io/badge/Version-v0.6.0-blue)
+![Version](https://img.shields.io/badge/Version-v0.7.0-blue)
 
 
 ## 📊 Project Snapshot
 
 | Metric | Value |
 |---------|-------|
-| Version | v0.6.0 |
+| Version | **v0.7.0** |
 | Development Status | Active |
 | Language | Python 3.13 |
 | Backend | FastAPI |
@@ -27,6 +27,8 @@ Traditional chatbots cannot reliably answer questions about private documents be
 
 DocuMind AI solves this by combining Retrieval-Augmented Generation (RAG), vector embeddings, and Large Language Models to produce grounded, document-aware answers while citing the relevant source chunks.
 
+With the introduction of the **Automated Document Ingestion Pipeline**, users can now upload PDF documents directly through the REST API, where they are automatically validated, indexed, and made immediately available for AI-powered question answering.
+
 
 ## ⭐ Highlights
 
@@ -35,7 +37,11 @@ DocuMind AI solves this by combining Retrieval-Augmented Generation (RAG), vecto
 - Retrieval-Augmented Generation (RAG)
 - Semantic Search
 - Context Expansion
+- Automatic PDF Upload
+- Automatic PDF Validation
+- Automatic Document Indexing
 - Source Citations
+- Modular Prompt Engineering
 - Modular Services
 - Clean Architecture
 - Ready for Cloud Deployment
@@ -43,18 +49,21 @@ DocuMind AI solves this by combining Retrieval-Augmented Generation (RAG), vecto
 
 ## 🧩 Core Components
 
-
-| Module              | Responsibility             |
+| Module | Responsibility |
 | ------------------- | -------------------------- |
-| pdf_reader.py       | Extract PDF text           |
-| text_chunker.py     | Split documents            |
-| embeddings.py       | Generate vector embeddings |
-| vector_store.py     | ChromaDB integration       |
-| retriever.py        | Semantic search            |
-| context_expander.py | Improve retrieval context  |
-| rag.py              | RAG orchestration          |
-| rag_service.py      | Business logic             |
-| chat.py             | REST API endpoint          |
+| pdf_reader.py | Extract PDF text |
+| text_chunker.py | Split documents |
+| embeddings.py | Generate vector embeddings |
+| vector_store.py | ChromaDB integration |
+| retriever.py | Semantic search |
+| context_expander.py | Improve retrieval context |
+| rag.py | RAG orchestration |
+| rag_service.py | Business logic |
+| pdf_service.py | PDF upload & indexing logic |
+| qa_prompt.py | Question answering prompt |
+| formatting_rules.py | Response formatting rules |
+| chat.py | Chat API endpoint |
+| upload.py | Upload API endpoint |
 
 
 ## 🏗 System Architecture
@@ -71,13 +80,16 @@ flowchart TD
 
     Service[⚙️ Service Layer]
 
+    UploadService[📁 PDF Service]
     RAG[RAG Engine]
 
-    Retriever[🔍 Retriever]
+    Validation[✅ File Validation]
+    Storage[💾 Save PDF]
     Indexer[📑 PDF Indexer]
 
     Chunker[✂️ Text Chunking]
 
+    Retriever[🔍 Retriever]
     Context[🧠 Context Expansion]
 
     Chroma[(🗄️ ChromaDB)]
@@ -92,26 +104,36 @@ flowchart TD
     API --> Upload
 
     Chat --> Service
-    Upload --> Service
+    Upload --> UploadService
 
-    Service --> RAG
-
-    RAG --> Retriever
-    RAG --> Indexer
+    UploadService --> Validation
+    Validation --> Storage
+    Storage --> Indexer
 
     Indexer --> Chunker
     Chunker --> Chroma
 
+    Service --> RAG
+    RAG --> Retriever
     Retriever --> Context
     Context --> Chroma
 
     Chroma --> Gemini
-
     Gemini --> Answer
 ```
 
 
 ## 📜 Version History
+
+### v0.7.0
+
+- PDF Upload API
+- Automatic PDF Validation
+- Automatic File Persistence
+- Automatic Document Indexing
+- End-to-End Document Ingestion Pipeline
+- Modular Prompt Architecture
+- Upload Service Layer
 
 ### v0.6.0
 
@@ -146,18 +168,20 @@ flowchart TD
 
 
 
-## 🎯 Next Milestone (v0.7.0)
+## 🎯 Next Milestone (v0.8.0)
 
-- Upload API
-- Automatic Indexing
-- File Validation
 - Multi-document Support
+- Document Management
+- Document-aware Chat
+- Improved Source Formatting
+- Rich Response Metadata
 
 ## 🎯 Future Milestones
 
 - Authentication
 - Chat History
 - Streamlit Frontend
+- React Frontend
 - Docker
 - AWS Deployment
 - CI/CD
@@ -209,4 +233,4 @@ If you find the project interesting:
 
 Happy Coding!
 
-— Harsh More
+— **Harsh More**
