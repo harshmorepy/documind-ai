@@ -8,16 +8,23 @@ questions using the RAG pipeline.
 from backend.app.rag import answer_question
 
 
-def ask_question(question: str):
+def ask_question(
+    question: str,
+    document: str | None = None,
+):
     """
     Ask DocuMind AI a question.
 
     Returns a JSON-ready dictionary.
     """
 
-    result = answer_question(question)
-
+    result = answer_question(
+        question=question,
+        document=document,
+    )
+    
     sources = []
+    
 
     if result["sources"]:
 

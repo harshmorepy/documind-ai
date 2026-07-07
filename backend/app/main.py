@@ -13,6 +13,7 @@ from backend.app.api.routers.health import router as health_router
 from backend.app.api.routers.root import router as root_router
 from backend.app.api.routers.chat import router as chat_router
 from backend.app.api.routers.upload import router as upload_router
+from backend.app.api.routers.documents import router as documents_router
 
 
 
@@ -26,5 +27,6 @@ app.include_router(root_router)
 app.include_router(health_router)
 app.include_router(chat_router)
 app.include_router(upload_router)
+app.include_router(documents_router)
 
 

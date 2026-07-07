@@ -6,6 +6,9 @@ from google import genai
 import os
 from dotenv import load_dotenv
 
+from backend.app.schemas import document
+from pathlib import Path
+
 
 load_dotenv()
 
@@ -13,25 +16,21 @@ client = genai.Client(
     api_key=os.getenv("GEMINI_API_KEY")
 )
 
-def answer_question(question):
-
-    results = retrieve(question)
+def answer_question(
+    question: str,
+    document: str | None = None,
+):
     
-    # print("=" * 50)
-    # print("DEBUG")
-    # print("=" * 50)
+    if document:
+        document = Path(document).stem
+        document = document.replace(" ", "_").lower()
     
-    # print(results)
-
-    # print(type(results["documents"]))
-    # print(results["documents"])
-
-    # print(type(results["documents"][0]))
-
-    # if isinstance(results["documents"][0], list):
-    #     print("The first item is a LIST")
-    # else:
-    #     print("The first item is a STRING")
+    results = retrieve(
+        query=question,
+        document=document,
+    )
+    
+    
 
     chunks = results["documents"]
     metadata = results["metadatas"]

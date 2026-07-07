@@ -4,14 +4,14 @@
 ![Gemini](https://img.shields.io/badge/LLM-Gemini%202.5%20Flash-blueviolet)
 ![License](https://img.shields.io/badge/License-MIT-success)
 ![Status](https://img.shields.io/badge/Status-Active%20Development-brightgreen)
-![Version](https://img.shields.io/badge/Version-v0.7.0-blue)
+![Version](https://img.shields.io/badge/Version-v0.8.0-blue)
 
 
 ## 📊 Project Snapshot
 
 | Metric | Value |
 |---------|-------|
-| Version | **v0.7.0** |
+| Version | v0.8.0 |
 | Development Status | Active |
 | Language | Python 3.13 |
 | Backend | FastAPI |
@@ -27,8 +27,6 @@ Traditional chatbots cannot reliably answer questions about private documents be
 
 DocuMind AI solves this by combining Retrieval-Augmented Generation (RAG), vector embeddings, and Large Language Models to produce grounded, document-aware answers while citing the relevant source chunks.
 
-With the introduction of the **Automated Document Ingestion Pipeline**, users can now upload PDF documents directly through the REST API, where they are automatically validated, indexed, and made immediately available for AI-powered question answering.
-
 
 ## ⭐ Highlights
 
@@ -37,11 +35,11 @@ With the introduction of the **Automated Document Ingestion Pipeline**, users ca
 - Retrieval-Augmented Generation (RAG)
 - Semantic Search
 - Context Expansion
-- Automatic PDF Upload
-- Automatic PDF Validation
-- Automatic Document Indexing
 - Source Citations
-- Modular Prompt Engineering
+- Automatic PDF Indexing
+- Multi-Document Support
+- Document Management API
+- Document-aware Retrieval
 - Modular Services
 - Clean Architecture
 - Ready for Cloud Deployment
@@ -50,7 +48,7 @@ With the introduction of the **Automated Document Ingestion Pipeline**, users ca
 ## 🧩 Core Components
 
 | Module | Responsibility |
-| ------------------- | -------------------------- |
+|----------|----------------|
 | pdf_reader.py | Extract PDF text |
 | text_chunker.py | Split documents |
 | embeddings.py | Generate vector embeddings |
@@ -59,11 +57,11 @@ With the introduction of the **Automated Document Ingestion Pipeline**, users ca
 | context_expander.py | Improve retrieval context |
 | rag.py | RAG orchestration |
 | rag_service.py | Business logic |
-| pdf_service.py | PDF upload & indexing logic |
-| qa_prompt.py | Question answering prompt |
-| formatting_rules.py | Response formatting rules |
-| chat.py | Chat API endpoint |
-| upload.py | Upload API endpoint |
+| pdf_service.py | Upload & indexing pipeline |
+| document_service.py | Document management |
+| upload.py | Upload REST endpoint |
+| documents.py | Documents REST endpoint |
+| chat.py | Chat REST endpoint |
 
 
 ## 🏗 System Architecture
@@ -77,19 +75,20 @@ flowchart TD
 
     Chat[💬 Chat API]
     Upload[📄 Upload API]
+    Documents[📚 Documents API]
 
     Service[⚙️ Service Layer]
 
-    UploadService[📁 PDF Service]
+    PDFService[📄 PDF Service]
+    DocumentService[📚 Document Service]
+
     RAG[RAG Engine]
 
-    Validation[✅ File Validation]
-    Storage[💾 Save PDF]
+    Retriever[🔍 Retriever]
     Indexer[📑 PDF Indexer]
 
     Chunker[✂️ Text Chunking]
 
-    Retriever[🔍 Retriever]
     Context[🧠 Context Expansion]
 
     Chroma[(🗄️ ChromaDB)]
@@ -102,38 +101,72 @@ flowchart TD
 
     API --> Chat
     API --> Upload
+    API --> Documents
 
     Chat --> Service
-    Upload --> UploadService
+    Upload --> PDFService
+    Documents --> DocumentService
 
-    UploadService --> Validation
-    Validation --> Storage
-    Storage --> Indexer
+    PDFService --> Indexer
+
+    Service --> RAG
+
+    RAG --> Retriever
 
     Indexer --> Chunker
     Chunker --> Chroma
 
-    Service --> RAG
-    RAG --> Retriever
     Retriever --> Context
     Context --> Chroma
 
     Chroma --> Gemini
+
     Gemini --> Answer
 ```
+
+## ✨ Current Features
+
+### 📄 Upload API
+
+- Upload PDF documents
+- Automatic validation
+- Automatic indexing
+- Embedding generation
+- ChromaDB storage
+
+### 💬 Chat API
+
+- Ask questions across all indexed documents
+- Restrict search to a specific document (optional)
+- Source citations
+- AI-generated grounded answers
+
+### 📚 Documents API
+
+- List all indexed documents
+- Chunk count per document
+- Human-readable document names
+- Ready for frontend integration
 
 
 ## 📜 Version History
 
+### v0.8.0
+
+- Documents API
+- Document Service
+- Multi-document management
+- Document-aware retrieval
+- Automatic document indexing
+- Input normalization
+- Improved API documentation
+
 ### v0.7.0
 
-- PDF Upload API
-- Automatic PDF Validation
-- Automatic File Persistence
-- Automatic Document Indexing
-- End-to-End Document Ingestion Pipeline
-- Modular Prompt Architecture
-- Upload Service Layer
+- Upload API
+- PDF Service
+- Automatic Indexing
+- File Validation
 
 ### v0.6.0
 
@@ -167,25 +200,26 @@ flowchart TD
 - PDF Reader
 
 
+## 🎯 Next Milestone (v0.9.0)
 
-## 🎯 Next Milestone (v0.8.0)
+- Streamlit Frontend
+- Chat Interface
+- Upload Interface
+- Document Dropdown
+- Better User Experience
 
-- Multi-document Support
-- Document Management
-- Document-aware Chat
-- Improved Source Formatting
-- Rich Response Metadata
 
 ## 🎯 Future Milestones
 
 - Authentication
-- Chat History
-- Streamlit Frontend
-- React Frontend
+- Conversation Memory
+- Multi-user Workspace
+- Streaming Responses
 - Docker
 - AWS Deployment
 - CI/CD
 - Monitoring
+- Production Database
 
 
 ## 💼 What This Project Demonstrates
@@ -194,9 +228,11 @@ flowchart TD
 - Backend Development
 - FastAPI
 - REST APIs
+- Service Layer Architecture
 - Vector Databases
 - Retrieval-Augmented Generation (RAG)
 - Prompt Engineering
+- Production API Design
 - Software Architecture
 - Git Workflow
 - Production-Oriented Development
@@ -219,6 +255,8 @@ Thank you for taking the time to explore DocuMind AI.
 
 This project represents an ongoing journey toward building production-ready AI systems with clean architecture, scalable backend engineering, and modern Large Language Models.
 
+Every milestone focuses on writing maintainable, production-quality software rather than simply making features work.
+
 Whether you're a recruiter, developer, or AI enthusiast, I hope this repository provides insight into both the engineering process and the evolution of an AI application from prototype to production.
 
 If you find the project interesting:
@@ -233,4 +271,4 @@ If you find the project interesting:
 
 Happy Coding!
 
-— **Harsh More**
+— Harsh More

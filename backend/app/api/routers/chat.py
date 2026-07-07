@@ -27,8 +27,12 @@ def chat(request: ChatRequest):
     Ask DocuMind AI a question.
     """
 
-    result = ask_question(request.question)
-
+    result = ask_question(
+        question=request.question,
+        document=request.document,
+    )
+    
+    
     return ChatResponse(
         answer=result["answer"],
         sources=result["sources"]
