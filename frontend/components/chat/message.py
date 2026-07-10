@@ -16,7 +16,13 @@ def render(
     Render a chat message.
     """
 
-    with st.chat_message(role):
+    USER_AVATAR = "🧸"
+    ASSISTANT_AVATAR = "🟢"
+
+    avatar = USER_AVATAR if role == "user" else ASSISTANT_AVATAR
+
+    with st.chat_message(role, avatar=avatar):
+        
 
         st.markdown(content)
 

@@ -24,6 +24,12 @@ from components.chat.message import (
     render as render_message,
 )
 
+from components.chat import error as chat_error
+
+from components.chat.welcome import (
+    render as render_welcome,
+)
+
 
 def render():
     """
@@ -59,9 +65,13 @@ def render():
     # Chat History
     # --------------------------------------------------
 
-    render_history(
-        st.session_state.messages
-    )
+    if st.session_state.messages:
+        render_history(
+            st.session_state.messages
+        )
+    
+    else:
+        render_welcome()
 
     # --------------------------------------------------
     # Chat Input
@@ -94,18 +104,32 @@ def render():
     # Backend Request
     # --------------------------------------------------
 
-    with st.spinner("Thinking..."):
+    assistant_placeholder = st.empty()
 
-        response = ask_question(
-            question=question,
-            document=selected_document,
-        )
+    try:
 
+        with assistant_placeholder.container():
+            with st.spinner(
+                "🧠 Searching your knowledge base..."
+            ):
+                response = ask_question(
+                    question=question,
+                    document=selected_document,
+                )
+
+    except Exception:
+        assistant_placeholder.empty()
+        chat_error.backend_unavailable()
+        return
+
+    assistant_placeholder.empty()    
+        
     if response.status_code != 200:
 
-        st.error(
-            "Failed to get a response."
-        )
+        if response.status_code >= 500:
+            chat_error.ai_service_unavailable()
+        else:
+            chat_error.unexpected_error()
 
         return
 

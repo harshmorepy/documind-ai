@@ -19,7 +19,15 @@ def render():
             "All Documents" is selected.
     """
 
-    response = list_documents()
+    try:
+        response = list_documents()
+
+    except Exception:
+        st.warning(
+            "🔌 Unable to load indexed documents.\n\n"
+            "Please make sure the backend server is running."
+        )
+        return None
 
     document_names = []
 
@@ -32,9 +40,34 @@ def render():
             for document in documents
         ]
 
+    else:
+        st.warning(
+            "Unable to retrieve the document list."
+        )
+        return None
+
+    options = ["All Documents"] + document_names
+
+    default_index = 0
+
+    saved_document = st.session_state.get("selected_document")
+
+    if (
+        saved_document
+        and saved_document in options
+    ):
+        default_index = options.index(saved_document)
+
     selected_document = st.selectbox(
         "📂 Search Scope",
-        options=["All Documents"] + document_names,
+        options=options,
+        index=default_index,
+    )
+
+    # Clear the one-time selection
+    st.session_state.pop(
+        "selected_document",
+        None,
     )
 
     if selected_document == "All Documents":
